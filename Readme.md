@@ -1,1 +1,1 @@
-This is a readme file for the test database. I just changed it a little bit. You have a very big one, I must say.
+Just run the shell script to connect to the database and show all the records in Customers table.
