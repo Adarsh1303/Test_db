@@ -20,7 +20,7 @@ class mysqlconn {
 
 	public static void mysql_query(Connection con) throws Exception {
 		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select Customer_id, Customer_name from Customers"); 
+		ResultSet rs = st.executeQuery("select Customer_id, Customer_email, Customer_phone from Customers"); 
 		html_gen(rs);
 	}
 
@@ -34,7 +34,7 @@ class mysqlconn {
 			StringBuilder end = new StringBuilder("</body></html>");
 			StringBuilder content = new StringBuilder();
 			while(rs.next())  
-			 	content.append(rs.getInt(1)).append(" ").append(rs.getString(2)).append("<br>"); 
+			 	content.append(rs.getInt(1)).append(" ").append(rs.getString(2)).append(rs.getString(3)).append(" yolo<br>"); 
 
 			start = start.append(content).append(end); 
 			out.println(start.toString());
