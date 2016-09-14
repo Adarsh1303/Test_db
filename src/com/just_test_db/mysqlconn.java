@@ -4,44 +4,55 @@ import java.sql.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
-@Path("/mysqlconn")
+@Path("mysqlconn")
 class mysqlconn {
 
 	
-	/*public static void main(String[] args) {
+	public static void main(String[] args) {
 
 		try {
-			Connection con = Connect_db.getConnection();
-			mysql_query(con);
-			mysql_connection_close(con);
+			mysqlconn m = new mysqlconn();
+			Customer c = null;
+			c = m.getdata();
+			c.print();
 		}
 		catch (Exception e) {
-			System.out.println("Couldnt query");
 		}
-
-		System.out.println("Successful Connection");
   
-	}*/
+	}
 	@GET
-	@Path("/Customer")
+	@Path("/customer")
 	@Produces(MediaType.APPLICATION_XML)
-	public void getdata() {
+	public Customer getdata() {
+		Customer c = new Customer();
 		try {
+			mysqlconn m = new mysqlconn();
 			Connection con = Connect_db.getConnection();
-			mysql_query(con);
-			mysql_connection_close(con);
+			c = m.mysql_query(con);
+			m.mysql_connection_close(con);
 		}
 		catch (Exception e) {
 			e.printStackTrace();
 		}
-
+		return c;
+		
 	}
 	
-	public Customer mysql_query(Connection con) throws Exception {
-		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select Customer_id, Customer_email, Customer_phone from Customers");
-		Customer c = new Customer(rs.getInt(1),rs.getString(2),rs.getString(3));
-		return c;
+	public Customer mysql_query(Connection con){
+		Customer q = new Customer(3,"klbm","949494");
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("select Customer_id, Customer_email, Customer_phone from Customers");
+			if(rs.next()) {
+				Customer c = new Customer(rs.getInt(1),rs.getString(2),rs.getString(3));
+				q = c;
+			}
+			return q;
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return q;
 		//html_gen(rs);
 	}
 
@@ -68,8 +79,13 @@ class mysqlconn {
 
 	}*/
 
-	public void mysql_connection_close(Connection con) throws Exception {
-		con.close();
+	public int mysql_connection_close(Connection con){
+		try {
+			con.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return 1;
 	}
 }
 

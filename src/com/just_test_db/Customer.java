@@ -2,9 +2,12 @@ package com.just_test_db;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement(name="Customer")
-class Customer {
+class Customer implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
 	int CustomerID;
 	String Customer_email;
 	String Customer_phone;
@@ -53,6 +56,10 @@ class Customer {
 	@XmlElement
 	public void setCustomer_phone(String customer_phone) {
 		this.Customer_phone = customer_phone;
+	}
+	
+	public void print() {
+		System.out.println(this.CustomerID+" "+this.Customer_email+" "+this.Customer_phone);
 	}
 	
 }
